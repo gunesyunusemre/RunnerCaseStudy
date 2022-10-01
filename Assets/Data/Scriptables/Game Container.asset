@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e442a574a1aa46c4b7c77356c4c69c95, type: 3}
+  m_Name: Game Container
+  m_EditorClassIdentifier: 
+  stackContainer: {fileID: 11400000, guid: 94cf668c833af6b4e833384b3b35d0fd, type: 2}
