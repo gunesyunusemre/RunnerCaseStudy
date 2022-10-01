@@ -27,8 +27,11 @@ namespace Stacks
             follow = followTarget;
             height = container.GetHeight();
             if (index == 0)
+            {
+                "Test".Log();
                 height = 0f;
-            
+            }
+
             rotDampValue = container.RotDamping;
             dampValue = container.Damping;
 
@@ -41,18 +44,33 @@ namespace Stacks
             _isConstructed = true;
         }
 
-
+        [SerializeField] private float quadSpeed = 30f;
+        [SerializeField] private bool isSmoothDamp = true;
+        
+        
         private void Update()
         {
             if (!_isConstructed)
                 return;
 
+            
             //Pos
             var beforePos = follow.position;
             var mPos = _transform.position;
             var dir = beforePos - mPos;
-            var target2 = new Vector3(beforePos.x, beforePos.y + height, beforePos.z);
-            _transform.position = Vector3.SmoothDamp(mPos, target2, ref velocity, dampValue);
+            var target = new Vector3(beforePos.x, beforePos.y + height, beforePos.z);
+            if (isSmoothDamp)
+            {
+                _transform.position = Vector3.SmoothDamp(mPos, target, ref velocity, dampValue);
+            }
+            else
+            {
+                var cPos = followParent.position;
+                cPos.y += height;
+                _transform.position = Formula.QuadraticCurve(mPos, target, cPos, Time.deltaTime * quadSpeed);
+            }
+
+            
 
 
             //Rot
@@ -62,7 +80,23 @@ namespace Stacks
             var targetRotVector = new Vector3(targetRot.eulerAngles.x, targetRot.eulerAngles.y, targetRot.eulerAngles.z);
             var euler = Vector3.SmoothDamp(currentRotVector, targetRotVector, ref rotVelocity, rotDampValue);
             euler = new Vector3(0f, 0f, euler.z);
-            _transform.localRotation = Quaternion.Euler(euler);
+            if (isSmoothDamp)
+            {
+                _transform.localRotation = Quaternion.Euler(euler);
+            }
+            else
+            {
+                var cPos = followParent.position;
+                cPos.y += height;
+                var dirC = target - cPos;
+                var targetCRot = Quaternion.LookRotation(dirC.normalized);
+                var targetCRotVector = new Vector3(targetCRot.eulerAngles.x, targetCRot.eulerAngles.y, targetCRot.eulerAngles.z);
+                var quadraRot = Formula.QuadraticCurve(currentRotVector, targetRotVector, targetCRotVector, Time.deltaTime * quadSpeed);
+                quadraRot = new Vector3(0f, 0f, quadraRot.z);
+                _transform.localRotation = Quaternion.Euler(quadraRot);
+            }
+            
+            
         }
         
         

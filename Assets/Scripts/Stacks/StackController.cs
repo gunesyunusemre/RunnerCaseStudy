@@ -33,14 +33,19 @@ namespace Stacks
             var targetPos = Vector3.zero;
             foreach (var instance in _stackInstanceList)
                 targetPos.y += instance.container.GetHeight();
-
+            
             var isFirst = _stackInstanceList.Count <= 0;
-            var lastIndex = isFirst ? 0 : _stackInstanceList.Count - 1;
+            var isSecond = _stackInstanceList.Count <= 1;
+            var lastIndex = isFirst ? 0 : _stackInstanceList.Count -1;
+            var index = isSecond ? 0 : _stackInstanceList.Count - 2;
+            var collectIndex = isFirst ? 0 : lastIndex + 1;
             _stackInstanceList.Add(stackInstance);
+
             stackTransform.GoToDynamicPosition(parent, targetPos, .5f, 2f)
                 .OnKill(() =>
                 {
                     Transform followTarget = default;
+                    Transform followSecondTarget = default;
                     if (isFirst)
                         followTarget = followParent;
                     else
@@ -48,8 +53,15 @@ namespace Stacks
                         var last = _stackInstanceList[lastIndex];
                         followTarget = last.GetTransform();
                     }
-                   
-                    stackInstance.container.FireOnCollect(followTarget, lastIndex, followParent);
+
+                    if (isSecond)
+                        followSecondTarget = followTarget;
+                    else
+                    {
+                        var last = _stackInstanceList[index];
+                        followSecondTarget = last.GetTransform();
+                    }
+                    stackInstance.container.FireOnCollect(followTarget, collectIndex, followSecondTarget);
                 });
         }
 

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b24fa3397441471082b5b066674c0d34, type: 3}
   m_Name: StackContainer
   m_EditorClassIdentifier: 
-  rotDamping: 0.02
-  damping: 0.02
+  rotDamping: 0.1
+  damping: 0.1
   height: 0.3
