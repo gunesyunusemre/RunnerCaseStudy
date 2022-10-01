@@ -43,10 +43,10 @@ namespace Stacks
             stackController.AddStack(this);
         }
 
-        private void OnCollect(Transform followTarget, bool isFirst)
+        private void OnCollect(Transform followTarget, int index, Transform followParent)
         {
             var followComponent = gameObject.AddComponent<StackFollowComponent>();
-            followComponent.Construct(container, followTarget, isFirst);
+            followComponent.Construct(container, followTarget, index, followParent);
         }
     }
 }

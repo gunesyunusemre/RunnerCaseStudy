@@ -49,7 +49,7 @@ namespace Stacks
                         followTarget = last.GetTransform();
                     }
                    
-                    stackInstance.container.FireOnCollect(followTarget, isFirst);
+                    stackInstance.container.FireOnCollect(followTarget, lastIndex, followParent);
                 });
         }
 
