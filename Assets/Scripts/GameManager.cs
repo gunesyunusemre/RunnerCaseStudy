@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         SyncManagerInstanceList();
         foreach (var baseManager in _managerInstanceDict.Values)

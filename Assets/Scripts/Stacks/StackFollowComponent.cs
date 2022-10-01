@@ -27,10 +27,7 @@ namespace Stacks
             follow = followTarget;
             height = container.GetHeight();
             if (index == 0)
-            {
-                "Test".Log();
                 height = 0f;
-            }
 
             rotDampValue = container.RotDamping;
             dampValue = (float)Formula.Map(index, 0, container.MaxStackCount, container.MinDamping, container.MaxDamping);
@@ -61,6 +58,7 @@ namespace Stacks
             var target = new Vector3(beforePos.x, beforePos.y + height, beforePos.z);
             if (isSmoothDamp)
             {
+                
                 _transform.position = Vector3.SmoothDamp(mPos, target, ref velocity, dampValue);
             }
             else

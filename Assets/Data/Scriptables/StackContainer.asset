@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotDamping: 0.1
   minDamping: 0.003
-  maxDamping: 0.075
-  maxStackCount: 15
+  maxDamping: 0.0375
+  maxStackCount: 10
   height: 0.3
