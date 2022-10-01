@@ -8,11 +8,15 @@ namespace Stacks
     public class StackContainer : ScriptableObject
     {
         [SerializeField] private float rotDamping = .02f;
-        [SerializeField] private float damping = .02f;
+        [SerializeField] private float minDamping = .003f;
+        [SerializeField] private float maxDamping = .085f;
+        [SerializeField] private int maxStackCount = 15;
         [SerializeField] private float height;
 
         public float RotDamping => rotDamping;
-        public float Damping => damping;
+        public float MaxDamping => maxDamping;
+        public float MinDamping => minDamping;
+        public float MaxStackCount => maxStackCount;
 
 
         public float GetHeight()

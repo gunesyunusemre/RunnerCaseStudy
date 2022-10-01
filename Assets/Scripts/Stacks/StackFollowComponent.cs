@@ -33,7 +33,7 @@ namespace Stacks
             }
 
             rotDampValue = container.RotDamping;
-            dampValue = container.Damping;
+            dampValue = (float)Formula.Map(index, 0, container.MaxStackCount, container.MinDamping, container.MaxDamping);
 
             _transform = transform;
 

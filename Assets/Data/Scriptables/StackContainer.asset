@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: StackContainer
   m_EditorClassIdentifier: 
   rotDamping: 0.1
-  damping: 0.1
+  minDamping: 0.003
+  maxDamping: 0.075
+  maxStackCount: 15
   height: 0.3
