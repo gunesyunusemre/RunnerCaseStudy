@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e442a574a1aa46c4b7c77356c4c69c95, type: 3}
-  m_Name: Game Container
+  m_Script: {fileID: 11500000, guid: c9a288d345784ae785b69a3e5a26fac7, type: 3}
+  m_Name: Managers Container
   m_EditorClassIdentifier: 
-  stackContainer: {fileID: 11400000, guid: 94cf668c833af6b4e833384b3b35d0fd, type: 2}
-  managersContainer: {fileID: 11400000, guid: 20490d58488cee442aa6ae584ab6bba6, type: 2}
+  managerList:
+  - {fileID: 9092036613729568012, guid: 6ce46204dbbc8ba408b4ab18487b5c5b, type: 3}

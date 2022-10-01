@@ -12,7 +12,7 @@ namespace Stacks.Instance
                 return;
         
             InstanceDict.Add(instance.InstanceID, instance);
-            instance.container = GameInstaller.instance.GetStackContainer();
+            instance.container = GameManager.Instance.GetStackContainer();
         }
     
         public static void RemoveInstance(this IStackInstance instance)
