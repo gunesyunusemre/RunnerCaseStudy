@@ -61,7 +61,6 @@ namespace Managers
 
         private void OnStartTouch(Vector3 arg0)
         {
-            "Test".Log();
             if (_isStarted)
                 return;
 

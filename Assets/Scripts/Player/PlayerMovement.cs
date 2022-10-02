@@ -1,4 +1,5 @@
 ﻿using System;
+using Dreamteck.Splines;
 using Helpers;
 using Managers;
 using UnityEngine;
@@ -7,6 +8,7 @@ namespace Player
 {
     public class PlayerMovement : MonoBehaviour
     {
+        [SerializeField] private SplineFollower follower;
         [SerializeField] private Transform target;
         [SerializeField] private float minDistance;
         [SerializeField] private float bound;
@@ -15,6 +17,7 @@ namespace Player
 
         
         private BasicInputManagerEvents inputManagerEvents;
+        private UIManagerEvents uiManagerEvents;
         private bool _disableInput;
         private Vector3 _oldMousePos;
         
@@ -27,13 +30,23 @@ namespace Player
                 "Input manager event can not found".Log();
                 return;
             }
+            
+            var checkUIEvents =
+                ManagerEventsHelper.TryGetManagerEvents(out uiManagerEvents);
+            if (!checkUIEvents)
+            {
+                "UI manager event can not found".Log();
+                return;
+            }
 
             RegisterInputManagerEvents(0);
+            RegisterUIManagerEvents();
         }
 
         private void OnDisable()
         {
             UnregisterInputManagerEvents();
+            UnregisterUIManagerEvents();
         }
 
         private void OnStartTouch(Vector3 mousePos)
@@ -77,6 +90,22 @@ namespace Player
 
         private void OnEndTouch(Vector3 mousePos)
         {
+        }
+
+        private void SetStatusForwardMovement(bool status) => follower.follow = status;
+
+        private void OnTapToPlay()
+        {
+            SetStatusForwardMovement(true);
+        }
+
+        private void RegisterUIManagerEvents()
+        {
+            uiManagerEvents.OnTapToPlay += OnTapToPlay;
+        }
+        private void UnregisterUIManagerEvents()
+        {
+            uiManagerEvents.OnTapToPlay -= OnTapToPlay;
         }
 
         private void RegisterInputManagerEvents(int managerID)
