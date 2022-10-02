@@ -8,5 +8,6 @@ namespace Managers.Base
         public abstract void Init();
         public abstract Type GetEvents(out BaseManagerEvents instance);
         public virtual void OnUpdate(){}
+        protected int ManagerID;
     }
 }

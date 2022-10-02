@@ -27,14 +27,18 @@ public class GameManager : MonoBehaviour
         foreach (var manager in managerList)
         {
             var managerInstance = Instantiate(manager, transform);
-            managerInstance.Init();
-            
+
             var type = managerInstance.GetEvents(out BaseManagerEvents events);
             ManagerEventsHelper.AddManagerEvents(events, type);
             events.OnDisable += ManagerOnDisable;
 
             var managerID = managerInstance.GetInstanceID();
             _managerInstanceDict.Add(managerID, managerInstance);
+        }
+
+        foreach (var manager in _managerInstanceDict.Values)
+        {
+            manager.Init();
         }
     }
 
