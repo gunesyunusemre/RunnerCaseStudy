@@ -13,7 +13,8 @@ namespace Managers
         [SerializeField] private List<GameObject> randomLevelList;
         
         [SerializeField] private bool isSpecificLevel;
-        [SerializeField][ShowIf("isSpecificLevel")] private int spesificLevelNumber;
+        [SerializeField][ShowIf("isSpecificLevel")][OnValueChanged("ChangeSpecificIndex")] 
+        private int specificLevelNumber;
 
         private GameObject _currentLevel;
         
@@ -67,6 +68,11 @@ namespace Managers
                 levelBlueprint = levelList[levelIndex];
             }
 
+            if (isSpecificLevel)
+            {
+                levelBlueprint = levelList[specificLevelNumber];
+            }
+
             if (_currentLevel)
                 Destroy(_currentLevel);
 
@@ -83,6 +89,15 @@ namespace Managers
                 return true;
 
             return false;
+        }
+
+        private void ChangeSpecificIndex()
+        {
+            if (specificLevelNumber < 0)
+                specificLevelNumber = 0;
+
+            if (specificLevelNumber >= levelList.Count)
+                specificLevelNumber = levelList.Count - 1;
         }
     }
 }
