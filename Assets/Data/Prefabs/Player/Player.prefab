@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82c6c7afa7da4dec93a377a0e0488d16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  follower: {fileID: 0}
   target: {fileID: 7538968105723641426}
   minDistance: 0.1
   bound: 5
@@ -189,11 +190,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7798210688856068579, guid: 2be8e792c72c648acbe10584a169bb42,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2be8e792c72c648acbe10584a169bb42,
         type: 3}
       propertyPath: m_Name
       value: handAnimRig
       objectReference: {fileID: 0}
+    - target: {fileID: 1586275158606009397, guid: 2be8e792c72c648acbe10584a169bb42,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d2de517e16310b94f842799475c5239d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2be8e792c72c648acbe10584a169bb42, type: 3}
 --- !u!4 &6206517533095763072 stripped
