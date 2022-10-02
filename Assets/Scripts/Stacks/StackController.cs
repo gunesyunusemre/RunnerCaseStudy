@@ -11,8 +11,9 @@ namespace Stacks
     {
         [SerializeField] private Transform parent;
         [SerializeField] private Transform followParent;
-        
-        
+        [SerializeField] private List<Transform> parentList;
+
+
         private List<IStackInstance> _stackInstanceList = new List<IStackInstance>();
         public int InstanceID { get; private set; }
 
@@ -33,36 +34,41 @@ namespace Stacks
             var targetPos = Vector3.zero;
             foreach (var instance in _stackInstanceList)
                 targetPos.y += instance.container.GetHeight();
-            
-            var isFirst = _stackInstanceList.Count <= 0;
-            var isSecond = _stackInstanceList.Count <= 1;
-            var lastIndex = isFirst ? 0 : _stackInstanceList.Count -1;
-            var index = isSecond ? 0 : _stackInstanceList.Count - 2;
-            var collectIndex = isFirst ? 0 : lastIndex + 1;
-            _stackInstanceList.Add(stackInstance);
 
-            stackTransform.GoToDynamicPosition(parent, targetPos, .5f, 2f)
-                .OnKill(() =>
+
+            var parentIndex = _stackInstanceList.Count > parentList.Count -1 ? parentList.Count -1 : _stackInstanceList.Count;
+            var targetParent = parentList[parentIndex];
+            //var isFirst = _stackInstanceList.Count <= 0;
+            //var isSecond = _stackInstanceList.Count <= 1;
+            //var lastIndex = isFirst ? 0 : _stackInstanceList.Count - 1;
+            //var index = isSecond ? 0 : _stackInstanceList.Count - 2;
+            //var collectIndex = isFirst ? 0 : lastIndex + 1;
+
+            stackTransform.GoToDynamicPosition(targetParent, Vector3.zero, .5f, 2f)
+                .OnComplete(() =>
                 {
-                    Transform followTarget = default;
-                    Transform followSecondTarget = default;
-                    if (isFirst)
-                        followTarget = followParent;
-                    else
-                    {
-                        var last = _stackInstanceList[lastIndex];
-                        followTarget = last.GetTransform();
-                    }
-
-                    if (isSecond)
-                        followSecondTarget = followTarget;
-                    else
-                    {
-                        var last = _stackInstanceList[index];
-                        followSecondTarget = last.GetTransform();
-                    }
-                    stackInstance.container.FireOnCollect(followTarget, collectIndex, followSecondTarget);
+                    // Transform followTarget = default;
+                    // Transform followSecondTarget = default;
+                    // if (isFirst)
+                    //     followTarget = followParent;
+                    // else
+                    // {
+                    //     var last = _stackInstanceList[lastIndex];
+                    //     followTarget = last.GetTransform();
+                    // }
+//
+                    // if (//
+                    //    followSecondTarget = followTarget;
+                    // else
+                    //{
+                    //    var last = _stackInstanceList[index];
+                    //     followSecondTarget = last.GetTransform();
+                    // }
+                    //stackInstance.container.FireOnCollect(followTarget, collectIndex, followSecondTarget);
+                    var followSecondTarget = parentIndex - 1 < 0 ? parentList[0] : parentList[parentIndex - 1];
+                    stackInstance.container.FireOnCollect(targetParent, parentIndex, followSecondTarget);
                 });
+            _stackInstanceList.Add(stackInstance);
         }
 
         public bool TryRequestStack(out IStackInstance stackInstance)
@@ -76,7 +82,7 @@ namespace Stacks
             _stackInstanceList.Remove(stackInstance);
             return true;
         }
-        
+
         public void RemoveStack(int count)
         {
             for (int i = 0; i < count; i++)

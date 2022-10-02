@@ -34,7 +34,7 @@ namespace Helpers
         
         public static Tweener GoToDynamicPosition(this Transform transform, Transform newParent, Vector3 targetPosition, float duration, float offset)
         {
-            //transform.parent = null;
+            transform.parent = null;
             
             var startRot = transform.rotation;
 

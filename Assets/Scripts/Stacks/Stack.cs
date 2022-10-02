@@ -45,8 +45,8 @@ namespace Stacks
 
         private void OnCollect(Transform followTarget, int index, Transform followParent)
         {
-            var followComponent = gameObject.AddComponent<StackFollowComponent>();
-            followComponent.Construct(container, followTarget, index, followParent);
+            //var followComponent = gameObject.AddComponent<StackFollowComponent>();
+            //followComponent.Construct(container, followTarget, index, followParent);
         }
     }
 }
