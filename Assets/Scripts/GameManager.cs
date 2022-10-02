@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Helpers;
 using Managers;
 using Managers.Base;
+using SaveSystem;
 using Stacks;
 using UnityEngine;
 
@@ -22,6 +24,8 @@ public class GameManager : MonoBehaviour
             return;
         }
         Instance = this;
+        
+        SaveDataHelper.LoadAll();
 
         var managerList = container.ManagersContainer.ManagerList;
         foreach (var manager in managerList)
