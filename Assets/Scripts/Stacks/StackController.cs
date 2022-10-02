@@ -30,6 +30,8 @@ namespace Stacks
 
         public void AddStack(IStackInstance stackInstance)
         {
+            PlayFx.AddStack();
+            
             var stackTransform = stackInstance.GetTransform();
             var targetPos = Vector3.zero;
             foreach (var instance in _stackInstanceList)
