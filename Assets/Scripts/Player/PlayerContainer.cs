@@ -8,6 +8,17 @@ namespace Player
 
     public class PlayerContainer : ScriptableObject
     {
+        [SerializeField] private float minDistance;
+        [SerializeField] private float bound;
+        [SerializeField, Range(5f, 160f)] private float swerveSpeed;
+        [SerializeField, Range(0.001f, 0.06f)] private float minDistToMove;
+        
+        public float MinDistance => minDistance;
+        public float Bound => bound;
+        public float SwerveSpeed => swerveSpeed;
+        public float MinDistToMove => minDistToMove;
+
+
         public event UnityAction OnLevelFinish;
         public void FireOnFinish() => OnLevelFinish?.Invoke();
         

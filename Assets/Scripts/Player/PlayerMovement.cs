@@ -11,10 +11,12 @@ namespace Player
     {
         [SerializeField] private SplineFollower follower;
         [SerializeField] private Transform target;
-        [SerializeField] private float minDistance;
-        [SerializeField] private float bound;
-        [SerializeField, Range(5f, 160f)] private float speed;
-        [SerializeField, Range(0.001f, 0.06f)] private float minDistToMove;
+        
+        
+        private float minDistance;
+        private float bound;
+        private float speed;
+        private float minDistToMove;
 
         
         private BasicInputManagerEvents inputManagerEvents;
@@ -25,6 +27,11 @@ namespace Player
         protected override void Awake()
         {
             base.Awake();
+
+            minDistance = PlayerContainer.MinDistance;
+            bound = PlayerContainer.Bound;
+            speed = PlayerContainer.SwerveSpeed;
+            minDistToMove = PlayerContainer.MinDistToMove;
             
             var checkEvents =
                 ManagerEventsHelper.TryGetManagerEvents(out inputManagerEvents);

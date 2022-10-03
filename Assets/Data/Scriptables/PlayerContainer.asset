@@ -12,3 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac62c7713bdd4994a268824db91d15c9, type: 3}
   m_Name: PlayerContainer
   m_EditorClassIdentifier: 
+  minDistance: 0.1
+  bound: 5
+  swerveSpeed: 160
+  minDistToMove: 0.0218
