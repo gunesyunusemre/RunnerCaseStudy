@@ -1,7 +1,9 @@
 ﻿using System;
+using DG.Tweening;
 using Helpers;
 using Managers.Base;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Managers
 {
@@ -9,6 +11,10 @@ namespace Managers
     {
         [SerializeField] private GameObject tapToStart;
         [SerializeField] private GameObject levelWinPanel;
+        [SerializeField] private Button winClaimButton;
+        [SerializeField] private CanvasGroup fader;
+        
+        
 
 
         private readonly UIManagerEvents managerEvents = new UIManagerEvents();
@@ -19,6 +25,8 @@ namespace Managers
 
         public override void Init()
         {
+            winClaimButton.onClick.AddListener(WinClaimClick);
+            
             ManagerID = GetInstanceID();
             RegisterInputManagerEvents();
             RegisterLevelManagerEvents();
@@ -89,6 +97,25 @@ namespace Managers
         private void OnLevelFinish()
         {
             levelWinPanel.SetActive(true);
+        }
+        
+        private void WinClaimClick()
+        {
+            _isStarted = false;
+            levelWinPanel.SetActive(false);
+
+            fader.gameObject.SetActive(true);
+            DOVirtual.Float(0f, 1f, .5f, value =>
+            {
+                fader.alpha = value;
+            }).OnKill(() =>
+            {
+                levelManagerEvents.FireOnNextLevel();
+                DOVirtual.Float(1f, 0f, .5f, value =>
+                {
+                    fader.alpha = value;
+                }).OnKill(()=>fader.gameObject.SetActive(true));
+            });
         }
 
     }
