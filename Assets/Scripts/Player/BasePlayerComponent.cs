@@ -18,7 +18,12 @@ namespace Player
             {
                 PlayerContainer.OnLevelFinish += OnLevelFinish;
                 PlayerContainer.OnLevelStart += OnLevelStart;
+                PlayerContainer.OnUpdate += OnUpdate;
             }
+        }
+
+        protected virtual void OnUpdate()
+        {
         }
 
         protected virtual void OnLevelStart(SplineComputer computer, float distance)

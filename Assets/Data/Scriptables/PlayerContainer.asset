@@ -16,3 +16,5 @@ MonoBehaviour:
   bound: {x: -1.5, y: 2.3}
   swerveSpeed: 160
   minDistToMove: 0.0218
+  forwardSpeed: 5
+  frictionMoveToZeroSpeed: 5

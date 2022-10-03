@@ -30,6 +30,11 @@ namespace Player
             this.SetPlayerContainer(playerContainer, id);
         }
 
+        private void Update()
+        {
+            playerContainer.FireOnUpdate();
+        }
+
         private void PlayerContainerOnLevelFinish()
         {
             levelManagerEvents.FireOnLevelFinish();

@@ -14,6 +14,7 @@ namespace Interactable
                 return;
             
             playerContainer.FireOnFinish();
+            Destroy(gameObject);
         }
     }
 }

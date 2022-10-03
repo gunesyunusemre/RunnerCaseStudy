@@ -17,21 +17,30 @@ namespace Player
         private Vector2 bound;
         private float speed;
         private float minDistToMove;
+        private float forwardSpeed;
+        private float _frictionSpeed = 2;
 
-        
+
         private BasicInputManagerEvents inputManagerEvents;
         private UIManagerEvents uiManagerEvents;
         private bool _disableInput = true;
         private Vector3 _oldMousePos;
+        private float _friction;
         
         protected override void Awake()
         {
             base.Awake();
+            
+            PlayerContainer.OnChangeFriction += OnChangeFriction;
 
             minDistance = PlayerContainer.MinDistance;
             bound = PlayerContainer.Bound;
             speed = PlayerContainer.SwerveSpeed;
             minDistToMove = PlayerContainer.MinDistToMove;
+            forwardSpeed = PlayerContainer.ForwardSpeed;
+            _frictionSpeed = PlayerContainer.FrictionMoveToZeroSpeed;
+
+            follower.followSpeed = forwardSpeed;
             
             var checkEvents =
                 ManagerEventsHelper.TryGetManagerEvents(out inputManagerEvents);
@@ -57,6 +66,22 @@ namespace Player
         {
             UnregisterInputManagerEvents();
             UnregisterUIManagerEvents();
+        }
+
+        
+        protected override void OnUpdate()
+        {
+            base.OnUpdate();
+            if (_friction > 0)
+                _friction -= Time.deltaTime * _frictionSpeed;
+           
+            var currentSpeed = forwardSpeed - _friction;
+            follower.followSpeed = Mathf.Abs(currentSpeed);
+            if (currentSpeed < 0)
+                follower.direction = Spline.Direction.Backward;
+
+            if (currentSpeed > 0)
+                follower.direction = Spline.Direction.Forward;
         }
 
         private void OnStartTouch(Vector3 mousePos)
@@ -101,7 +126,9 @@ namespace Player
         private void OnEndTouch(Vector3 mousePos)
         {
         }
-        
+
+
+        #region Register
 
         private void RegisterUIManagerEvents()
         {
@@ -129,6 +156,8 @@ namespace Player
             inputManagerEvents.OnDisable -= InputManagerDisable;
             inputManagerEvents.OnEnable -= RegisterInputManagerEvents;
         }
+
+        #endregion
 
         private void InputManagerDisable(int arg0)
         {
@@ -163,6 +192,11 @@ namespace Player
             follower.onPostBuild += () => follower.SetDistance(distance);
             follower.enabled = true;
             target.localPosition = Vector3.zero;
+        }
+        
+        private void OnChangeFriction(float percent)
+        {
+            _friction = (float)Formula.Map(percent, 0f, 100f, 0f, forwardSpeed);
         }
     }
 }
