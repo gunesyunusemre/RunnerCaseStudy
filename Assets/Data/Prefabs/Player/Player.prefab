@@ -140,10 +140,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   follower: {fileID: 0}
   target: {fileID: 7538968105723641426}
-  minDistance: 0.1
-  bound: 5
-  speed: 160
-  minDistToMove: 0.0218
 --- !u!114 &1473657102710262676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,6 +249,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -1059407620697288371, guid: 2be8e792c72c648acbe10584a169bb42,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6de9fc1cb522de6428a03e05d4300fdb, type: 2}
     - target: {fileID: 919132149155446097, guid: 2be8e792c72c648acbe10584a169bb42,
         type: 3}
       propertyPath: m_Name
