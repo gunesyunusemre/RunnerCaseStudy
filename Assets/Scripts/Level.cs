@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Dreamteck.Splines;
 using Helpers;
 using Managers;
@@ -17,8 +18,9 @@ public class Level : MonoBehaviour
                 levelManagerEvents = managerEvents;
         }
 
-        private void Start()
+        private IEnumerator Start()
         {
+                yield return new WaitForSeconds(.5f);
                 levelManagerEvents.FireOnLevelStarted(splineComputer, initialDistance);
         }
 }

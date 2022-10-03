@@ -27,9 +27,9 @@ namespace Player
         private Vector3 _oldMousePos;
         private float _friction;
         
-        protected override void Awake()
+        protected override void Start()
         {
-            base.Awake();
+            base.Start();
             
             PlayerContainer.OnChangeFriction += OnChangeFriction;
 

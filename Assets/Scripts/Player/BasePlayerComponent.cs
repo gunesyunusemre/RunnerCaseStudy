@@ -10,7 +10,7 @@ namespace Player
     {
         protected PlayerContainer PlayerContainer;
 
-        protected virtual void Awake()
+        protected virtual void Start()
         {
             var id = gameObject.GetInstanceID();
             var checkPlayerContainer  = PlayerHelper.TryGetPlayerContainer(id, out PlayerContainer);
