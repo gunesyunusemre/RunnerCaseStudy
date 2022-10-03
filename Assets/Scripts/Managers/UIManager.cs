@@ -8,16 +8,20 @@ namespace Managers
     public class UIManager : BaseManager
     {
         [SerializeField] private GameObject tapToStart;
-        
-        
+        [SerializeField] private GameObject levelWinPanel;
+
+
         private readonly UIManagerEvents managerEvents = new UIManagerEvents();
         private BasicInputManagerEvents inputManagerEvents;
+        private LevelManagerEvents levelManagerEvents;
         private bool _isStarted = false;
+
 
         public override void Init()
         {
             ManagerID = GetInstanceID();
             RegisterInputManagerEvents();
+            RegisterLevelManagerEvents();
         }
 
         public override Type GetEvents(out BaseManagerEvents instance)
@@ -37,6 +41,19 @@ namespace Managers
             UnregisterInputManagerEvents(0);
         }
 
+        private void RegisterLevelManagerEvents()
+        {
+            var checkLevelManagerEvents = ManagerEventsHelper.TryGetManagerEvents(out levelManagerEvents);
+            if (!checkLevelManagerEvents)
+            {
+                "Level manager event can not found".Log();
+                return;
+            }
+            
+            levelManagerEvents.OnLevelFinish += OnLevelFinish;
+        }
+
+       
         private void RegisterInputManagerEvents()
         {
             var checkInputManagerEvents = ManagerEventsHelper.TryGetManagerEvents(out inputManagerEvents);
@@ -68,5 +85,11 @@ namespace Managers
             managerEvents.FireOnTapToPlay();
             tapToStart.SetActive(false);
         }
+        
+        private void OnLevelFinish()
+        {
+            levelWinPanel.SetActive(true);
+        }
+
     }
 }
