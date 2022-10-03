@@ -1368,7 +1368,7 @@ MonoBehaviour:
   _sampleCount: 181
   startSampleIndex: 0
   multithreaded: 0
-  buildOnAwake: 0
+  buildOnAwake: 1
   buildOnEnable: 0
   _isUpdated: 1
   applyDirectionRotation: 1
