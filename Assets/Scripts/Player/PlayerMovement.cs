@@ -1,4 +1,5 @@
 ﻿using System;
+using DG.Tweening;
 using Dreamteck.Splines;
 using Helpers;
 using Managers;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace Player
 {
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement : BasePlayerComponent
     {
         [SerializeField] private SplineFollower follower;
         [SerializeField] private Transform target;
@@ -21,8 +22,10 @@ namespace Player
         private bool _disableInput;
         private Vector3 _oldMousePos;
         
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
+            
             var checkEvents =
                 ManagerEventsHelper.TryGetManagerEvents(out inputManagerEvents);
             if (!checkEvents)
@@ -103,6 +106,7 @@ namespace Player
         {
             uiManagerEvents.OnTapToPlay += OnTapToPlay;
         }
+
         private void UnregisterUIManagerEvents()
         {
             uiManagerEvents.OnTapToPlay -= OnTapToPlay;
@@ -129,6 +133,17 @@ namespace Player
         {
             UnregisterInputManagerEvents();
             inputManagerEvents.OnEnable += RegisterInputManagerEvents;
+        }
+
+        protected override void OnLevelFinish()
+        {
+            base.OnLevelFinish();
+            follower.follow = false;
+            _disableInput = true;
+            var localPosition = target.localPosition;
+            localPosition.x = 0f;
+            localPosition.y = 1f;
+            target.DOLocalMove(localPosition, .5f);
         }
     }
 }
