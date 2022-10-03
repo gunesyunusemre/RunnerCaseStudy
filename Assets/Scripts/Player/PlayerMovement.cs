@@ -14,7 +14,7 @@ namespace Player
         
         
         private float minDistance;
-        private float bound;
+        private Vector2 bound;
         private float speed;
         private float minDistToMove;
 
@@ -77,22 +77,22 @@ namespace Player
             var pos = mousePos;
             var targetPos = target.localPosition;
 
-            if (targetPos.x <= bound && pos.x > _oldMousePos.x)
+            if (targetPos.x <= bound.y && pos.x > _oldMousePos.x)
             {
                 target.localPosition = Vector3.MoveTowards(target.localPosition, 
                     new Vector3(targetPos.x + minDistToMove * distance, targetPos.y, targetPos.z),
                     Time.fixedDeltaTime * speed);
-                if (target.localPosition.x > bound)
-                    target.localPosition = new Vector3(bound, targetPos.y, targetPos.z);
+                if (target.localPosition.x > bound.y)
+                    target.localPosition = new Vector3(bound.y, targetPos.y, targetPos.z);
             }
             
-            if (targetPos.x >= -bound && pos.x < _oldMousePos.x)
+            if (targetPos.x >= bound.x && pos.x < _oldMousePos.x)
             {
                 target.localPosition = Vector3.MoveTowards(target.localPosition, 
                     new Vector3(targetPos.x - minDistToMove * distance, targetPos.y, targetPos.z),
                     Time.fixedDeltaTime * speed);
-                if (target.localPosition.x < -bound)
-                    target.localPosition = new Vector3(-bound, targetPos.y, targetPos.z);
+                if (target.localPosition.x < bound.x)
+                    target.localPosition = new Vector3(bound.x, targetPos.y, targetPos.z);
             }
 
             _oldMousePos = mousePos;

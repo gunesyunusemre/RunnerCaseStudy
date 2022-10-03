@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: PlayerContainer
   m_EditorClassIdentifier: 
   minDistance: 0.1
-  bound: 5
+  bound: {x: -1.5, y: 2.3}
   swerveSpeed: 160
   minDistToMove: 0.0218
