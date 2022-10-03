@@ -74,7 +74,7 @@ namespace Managers
             }
 
             if (_currentLevel)
-                Destroy(_currentLevel);
+                Destroy(_currentLevel.gameObject);
 
             var instance = Instantiate(levelBlueprint);
             instance.gameObject.name += " LevelNumber " + (levelIndex +1);
