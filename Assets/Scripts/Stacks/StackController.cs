@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using Helpers;
+using Managers;
 using Stacks.Instance;
 using UnityEngine;
 
@@ -26,6 +27,16 @@ namespace Stacks
         private void OnDisable()
         {
             this.RemoveInstance();
+        }
+
+        private void Awake()
+        {
+            var checkEvents =
+                ManagerEventsHelper.TryGetManagerEvents(out LevelManagerEvents levelManagerEvents);
+            if (checkEvents)
+            {
+                levelManagerEvents.OnNextLevel += ClearCurrentStack;
+            }
         }
 
         public void AddStack(IStackInstance stackInstance)
@@ -95,6 +106,14 @@ namespace Stacks
                 _stackInstanceList.Remove(last);
                 last.DestroyYourself();
             }
+        }
+        
+        private void ClearCurrentStack()
+        {
+            foreach (var stackInstance in _stackInstanceList)
+                stackInstance.DestroyYourself();
+            
+            _stackInstanceList.Clear();
         }
     }
 }
