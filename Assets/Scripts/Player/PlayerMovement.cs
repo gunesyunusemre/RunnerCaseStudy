@@ -19,7 +19,7 @@ namespace Player
         
         private BasicInputManagerEvents inputManagerEvents;
         private UIManagerEvents uiManagerEvents;
-        private bool _disableInput;
+        private bool _disableInput = true;
         private Vector3 _oldMousePos;
         
         protected override void Awake()
@@ -94,13 +94,7 @@ namespace Player
         private void OnEndTouch(Vector3 mousePos)
         {
         }
-
-        private void SetStatusForwardMovement(bool status) => follower.follow = status;
-
-        private void OnTapToPlay()
-        {
-            SetStatusForwardMovement(true);
-        }
+        
 
         private void RegisterUIManagerEvents()
         {
@@ -134,6 +128,14 @@ namespace Player
             UnregisterInputManagerEvents();
             inputManagerEvents.OnEnable += RegisterInputManagerEvents;
         }
+        
+        private void SetStatusForwardMovement(bool status) => follower.follow = status;
+
+        private void OnTapToPlay()
+        {
+            _disableInput = false;
+            SetStatusForwardMovement(true);
+        }
 
         protected override void OnLevelFinish()
         {
@@ -154,7 +156,6 @@ namespace Player
             follower.onPostBuild += () => follower.SetDistance(distance);
             follower.enabled = true;
             target.localPosition = Vector3.zero;
-            _disableInput = false;
         }
     }
 }

@@ -114,7 +114,11 @@ namespace Managers
                 DOVirtual.Float(1f, 0f, .5f, value =>
                 {
                     fader.alpha = value;
-                }).OnKill(()=>fader.gameObject.SetActive(true));
+                }).OnKill(() =>
+                {
+                    fader.gameObject.SetActive(false);
+                    tapToStart.SetActive(true);
+                });
             });
         }
 
