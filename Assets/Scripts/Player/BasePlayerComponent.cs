@@ -1,4 +1,5 @@
 ﻿using System;
+using Dreamteck.Splines;
 using Helpers;
 using UnityEngine;
 
@@ -9,16 +10,22 @@ namespace Player
     {
         protected PlayerContainer PlayerContainer;
 
-        protected virtual void Start()
+        protected virtual void Awake()
         {
             var id = gameObject.GetInstanceID();
             var checkPlayerContainer  = PlayerHelper.TryGetPlayerContainer(id, out PlayerContainer);
             if (checkPlayerContainer)
             {
                 PlayerContainer.OnLevelFinish += OnLevelFinish;
+                PlayerContainer.OnLevelStart += OnLevelStart;
             }
         }
-        
+
+        protected virtual void OnLevelStart(SplineComputer computer, float distance)
+        {
+            
+        }
+
         protected virtual void OnLevelFinish()
         {
             

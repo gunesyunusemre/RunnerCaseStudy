@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Dreamteck.Splines;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Player
@@ -9,5 +10,8 @@ namespace Player
     {
         public event UnityAction OnLevelFinish;
         public void FireOnFinish() => OnLevelFinish?.Invoke();
+        
+        public event UnityAction<SplineComputer, float> OnLevelStart;
+        public void FireOnStart(SplineComputer computer, float distance) => OnLevelStart?.Invoke(computer, distance);
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine.Events;
+﻿using Dreamteck.Splines;
+using UnityEngine.Events;
 
 namespace Managers
 {
@@ -12,6 +13,9 @@ namespace Managers
         
         public event UnityAction OnRetryLevel;
         public void FireOnRetryLevel() =>OnRetryLevel?.Invoke();
+        
+        public event UnityAction<SplineComputer, float> OnLevelStarted;
+        public void FireOnLevelStarted(SplineComputer computer, float distance) =>OnLevelStarted?.Invoke(computer, distance);
       
     }
 }

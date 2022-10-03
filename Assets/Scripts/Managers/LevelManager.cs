@@ -9,14 +9,14 @@ namespace Managers
 {
     public class LevelManager : BaseManager
     {
-        [SerializeField] private List<GameObject> levelList;
-        [SerializeField] private List<GameObject> randomLevelList;
+        [SerializeField] private List<Level> levelList;
+        [SerializeField] private List<Level> randomLevelList;
         
         [SerializeField] private bool isSpecificLevel;
         [SerializeField][ShowIf("isSpecificLevel")][OnValueChanged("ChangeSpecificIndex")] 
         private int specificLevelNumber;
 
-        private GameObject _currentLevel;
+        private Level _currentLevel;
         
         
         
@@ -49,9 +49,9 @@ namespace Managers
             CreateLevel();
         }
 
-        private GameObject CreateLevel()
+        private Level CreateLevel()
         {
-            GameObject levelBlueprint;
+            Level levelBlueprint;
             var levelIndex = SaveDataHelper.GameSaveData.LevelIndex;
             if (CheckRandom())
             {
@@ -79,6 +79,7 @@ namespace Managers
             var instance = Instantiate(levelBlueprint);
             instance.gameObject.name += " LevelNumber " + (levelIndex +1);
             _currentLevel = instance;
+            _currentLevel.Construct(managerEvents);
             return instance;
         }
 

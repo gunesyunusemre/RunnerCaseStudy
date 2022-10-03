@@ -44,10 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelList:
-  - {fileID: 3501299423753576889, guid: 63e5152517c443140b256120100da0d2, type: 3}
-  - {fileID: 3725635025559622230, guid: fc923ad29237a3742b2c662b0cf28f76, type: 3}
+  - {fileID: 5413635675572091922, guid: 63e5152517c443140b256120100da0d2, type: 3}
   randomLevelList:
-  - {fileID: 3725635025559622230, guid: fc923ad29237a3742b2c662b0cf28f76, type: 3}
-  - {fileID: 3501299423753576889, guid: 63e5152517c443140b256120100da0d2, type: 3}
+  - {fileID: 5413635675572091922, guid: 63e5152517c443140b256120100da0d2, type: 3}
   isSpecificLevel: 0
-  spesificLevelNumber: 0
+  specificLevelNumber: 0

@@ -22,9 +22,9 @@ namespace Player
         private bool _disableInput;
         private Vector3 _oldMousePos;
         
-        protected override void Start()
+        protected override void Awake()
         {
-            base.Start();
+            base.Awake();
             
             var checkEvents =
                 ManagerEventsHelper.TryGetManagerEvents(out inputManagerEvents);
@@ -139,11 +139,22 @@ namespace Player
         {
             base.OnLevelFinish();
             follower.follow = false;
+            follower.enabled = false;
             _disableInput = true;
             var localPosition = target.localPosition;
             localPosition.x = 0f;
             localPosition.y = 1f;
             target.DOLocalMove(localPosition, .5f);
+        }
+
+        protected override void OnLevelStart(SplineComputer computer, float distance)
+        {
+            base.OnLevelStart(computer, distance);
+            follower.spline = computer;
+            follower.onPostBuild += () => follower.SetDistance(distance);
+            follower.enabled = true;
+            target.localPosition = Vector3.zero;
+            _disableInput = false;
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using Dreamteck.Splines;
+using Helpers;
 using Managers;
 using UnityEngine;
 
@@ -9,12 +11,17 @@ namespace Player
         [SerializeField] private PlayerContainer playerContainer;
 
         private LevelManagerEvents levelManagerEvents;
-        private void Start()
+
+        private void Awake()
         {
-            playerContainer.OnLevelFinish += OnLevelFinish;
+            playerContainer.OnLevelFinish += PlayerContainerOnLevelFinish;
             
             var checkEvents =
                 ManagerEventsHelper.TryGetManagerEvents(out levelManagerEvents);
+            if (checkEvents)
+            {
+                levelManagerEvents.OnLevelStarted += LevelManagerEventsOnLevelStarted;
+            }
         }
 
         private void OnEnable()
@@ -23,9 +30,14 @@ namespace Player
             this.SetPlayerContainer(playerContainer, id);
         }
 
-        private void OnLevelFinish()
+        private void PlayerContainerOnLevelFinish()
         {
             levelManagerEvents.FireOnLevelFinish();
+        }
+        
+        private void LevelManagerEventsOnLevelStarted(SplineComputer computer, float distance)
+        {
+            playerContainer.FireOnStart(computer, distance);
         }
     }
 }
