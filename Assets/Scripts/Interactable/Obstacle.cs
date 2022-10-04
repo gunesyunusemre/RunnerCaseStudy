@@ -57,6 +57,7 @@ namespace Interactable
                 return;
 
             playerContainer.FireOnChangeFriction(frictionPercent);
+            playerContainer.FireOnTakeDamage();
         }
     }
 }

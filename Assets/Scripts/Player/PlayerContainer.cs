@@ -40,5 +40,8 @@ namespace Player
         public event UnityAction<float> OnChangeFriction;
         public void FireOnChangeFriction(float percent) => OnChangeFriction?.Invoke(percent);
         
+        public event UnityAction OnTakeDamage;
+        public void FireOnTakeDamage() => OnTakeDamage?.Invoke();
+        
     }
 }

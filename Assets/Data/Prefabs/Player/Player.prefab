@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 1473657102710262676}
   - component: {fileID: 157739426}
   - component: {fileID: 6390928872182275900}
+  - component: {fileID: 396853957098312754}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -81,6 +82,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerContainer: {fileID: 11400000, guid: bbba22b40aa93b944a75addc1839c6fb, type: 2}
+  impulseSource: {fileID: 396853957098312754}
 --- !u!114 &157739427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,6 +185,111 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.9999995, y: 1, z: 1.7346995}
   m_Center: {x: -0.6000013, y: -2.5701602e-10, z: 1.382647}
+--- !u!114 &396853957098312754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8318981755094684884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_RawSignal: {fileID: 11400000, guid: 31ba6a5c9bfe43242b5333116f6920bc, type: 2}
+    m_AmplitudeGain: 1
+    m_FrequencyGain: 1
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: -0.2617126
+          outSlope: -0.2617126
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.24470207
+          value: 0.9359584
+          inSlope: -0.41258815
+          outSlope: -0.41258815
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.6476089
+          value: 0.708935
+          inSlope: -0.8669548
+          outSlope: -0.8669548
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.25260314
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.8658294
+          value: 0.4627566
+          inSlope: -2.2011433
+          outSlope: -2.2011433
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 0
+          inSlope: -3.4490166
+          outSlope: -3.4490166
+          tangentMode: 34
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.1
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 1000
+    m_PropagationSpeed: 343
 --- !u!1001 &5884871750190463851
 PrefabInstance:
   m_ObjectHideFlags: 0
