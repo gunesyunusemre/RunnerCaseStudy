@@ -22,6 +22,7 @@ namespace Stacks
         private readonly List<IStackInstance> _stackInstanceList = new List<IStackInstance>();
         private SplineComputer _computer;
         private bool _isUntouchable = false;
+        private float _currentScore = 0;
         
         public int InstanceID { get; private set; }
 
@@ -96,6 +97,8 @@ namespace Stacks
                     stackInstance.container.FireOnCollect(targetParent, parentIndex, followSecondTarget);
                 });
             _stackInstanceList.Add(stackInstance);
+            
+            CalculateScore();
         }
 
         public bool TryRequestStack(out IStackInstance stackInstance)
@@ -111,6 +114,8 @@ namespace Stacks
             var index = _stackInstanceList.Count - 1;
             stackInstance = _stackInstanceList[index];
             _stackInstanceList.Remove(stackInstance);
+            
+            CalculateScore();
             return true;
         }
 
@@ -127,6 +132,7 @@ namespace Stacks
                 _stackInstanceList.Remove(last);
                 last.DestroyYourself();
             }
+            CalculateScore();
         }
 
         public void BreakStack()
@@ -228,6 +234,8 @@ namespace Stacks
 
             if (upgradedDict.Count <= 0)
                 _isUntouchable = false;
+            
+            CalculateScore();
         }
 
         private void ClearCurrentStack()
@@ -242,6 +250,26 @@ namespace Stacks
         {
             _computer = computer;
             dummy.spline = _computer;
+            _currentScore = 0;
+        }
+
+        private void CalculateScore()
+        {
+            float score = 0f;
+            foreach (var stackInstance in _stackInstanceList)
+            {
+                score += stackInstance.container.MyLevel * 1f;
+            }
+
+            var dif = score - _currentScore;
+            _currentScore = score;
+            var checkEvents =
+                ManagerEventsHelper.TryGetManagerEvents(out ScoreManagerEvents scoreManagerEvents);
+            if (!checkEvents) return;
+            if (dif > 0)
+                scoreManagerEvents.FireOnIncreaseScore(dif);
+            else if (dif< 0)
+                scoreManagerEvents.FireOnDecreaseScore(Mathf.Abs(dif));
         }
     }
 }

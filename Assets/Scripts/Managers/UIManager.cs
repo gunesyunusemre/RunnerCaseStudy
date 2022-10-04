@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Globalization;
 using DG.Tweening;
 using Helpers;
 using Managers.Base;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,16 +15,16 @@ namespace Managers
         [SerializeField] private GameObject levelWinPanel;
         [SerializeField] private Button winClaimButton;
         [SerializeField] private CanvasGroup fader;
+        [SerializeField] private TMP_Text scoreText;
+        [SerializeField] private TMP_Text levelScoreText;
         
-        
-
 
         private readonly UIManagerEvents managerEvents = new UIManagerEvents();
         private BasicInputManagerEvents inputManagerEvents;
         private LevelManagerEvents levelManagerEvents;
+        private ScoreManagerEvents scoreManagerEvents;
         private bool _isStarted = false;
-
-
+        
         public override void Init()
         {
             winClaimButton.onClick.AddListener(WinClaimClick);
@@ -30,6 +32,7 @@ namespace Managers
             ManagerID = GetInstanceID();
             RegisterInputManagerEvents();
             RegisterLevelManagerEvents();
+            RegisterScoreManagerEvents();
         }
 
         public override Type GetEvents(out BaseManagerEvents instance)
@@ -74,6 +77,19 @@ namespace Managers
             inputManagerEvents.OnDisable += UnregisterInputManagerEvents;
         }
         
+        private void RegisterScoreManagerEvents()
+        {
+            var checkScoreManagerEvents = ManagerEventsHelper.TryGetManagerEvents(out scoreManagerEvents);
+            if (!checkScoreManagerEvents)
+            {
+                "Score manager event can not found".Log();
+                return;
+            }
+            
+            scoreManagerEvents.OnChangeScore += ScoreManagerEventsOnChangeScore;
+            scoreManagerEvents.OnChangeLevelScore += ScoreManagerEventsOnChangeLevelScore;
+        }
+
         private void UnregisterInputManagerEvents(int id)
         {
             var checkInputManagerEvents = ManagerEventsHelper.TryGetManagerEvents(out inputManagerEvents);
@@ -101,10 +117,17 @@ namespace Managers
         
         private void WinClaimClick()
         {
-            _isStarted = false;
+            winClaimButton.interactable = false;
+            managerEvents.FireOnClaimLevelScore();
+            Invoke(nameof(WinFader), 1f);
+        }
+
+        private void WinFader()
+        {
             levelWinPanel.SetActive(false);
 
             fader.gameObject.SetActive(true);
+            
             DOVirtual.Float(0f, 1f, .5f, value =>
             {
                 fader.alpha = value;
@@ -116,11 +139,25 @@ namespace Managers
                     fader.alpha = value;
                 }).OnKill(() =>
                 {
+                    winClaimButton.interactable = true;
+
+                    _isStarted = false;
                     fader.gameObject.SetActive(false);
                     tapToStart.SetActive(true);
                 });
             });
         }
+        
+        private void ScoreManagerEventsOnChangeScore(float score)
+        {
+            scoreText.text = score.ToString(CultureInfo.InvariantCulture);
+        }
+        
+        private void ScoreManagerEventsOnChangeLevelScore(float levelScore)
+        {
+            levelScoreText.text = levelScore.ToString(CultureInfo.InvariantCulture);
+        }
+
 
     }
 }
