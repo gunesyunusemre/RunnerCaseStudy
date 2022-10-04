@@ -1,21 +1,23 @@
-using System;
+using DG.Tweening;
 using Helpers;
-using InstanceSystem;
 using Stacks.Instance;
 using UnityEngine;
 
 namespace Stacks
 {
+    [SelectionBase]
     public class Stack : MonoBehaviour, IStackInstance
     {
         public int InstanceID { get; private set; }
         public StackContainer container { get; set; }
 
         private Transform _transform;
+        private Transform _firstParent;
 
         private void OnEnable()
         {
             _transform = transform;
+            _firstParent = _transform.parent;
             InstanceID = gameObject.GetInstanceID();
             this.AddInstance();
         }
@@ -37,7 +39,17 @@ namespace Stacks
         }
 
         public Transform GetTransform() => _transform;
-        
+        public void BreakStack(Vector3 targetPos)
+        {
+            _transform.SetParent(null);
+            _transform.rotation = Quaternion.identity;
+            _transform.GoToStaticPosition(targetPos, .75f, 5f, 0f).OnKill(() =>
+            {
+                gameObject.AddComponent<StackControllerDetectorStackComponent>();
+                _transform.SetParent(_firstParent);
+            });
+        }
+
         private void OnBeforeCollect(IStackControllerInstance stackController)
         {
             stackController.AddStack(this);

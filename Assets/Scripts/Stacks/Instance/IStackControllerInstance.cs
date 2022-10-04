@@ -6,5 +6,6 @@ namespace Stacks.Instance
     {
         void AddStack(IStackInstance instance);
         bool TryRequestStack(out IStackInstance stackInstance);
+        void BreakStack();
     }
 }

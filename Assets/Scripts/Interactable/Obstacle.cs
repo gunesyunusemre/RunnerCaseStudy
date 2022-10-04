@@ -42,8 +42,8 @@ namespace Interactable
             var checkStack = stackControllerInstance.TryRequestStack(out var stackInstance);
             if (checkStack)
             {
-                //Here stack force
                 stackInstance.DestroyYourself();
+                stackControllerInstance.BreakStack();
             }
         }
 

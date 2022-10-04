@@ -8,5 +8,6 @@ namespace Stacks.Instance
         StackContainer container { get; set; }
         void DestroyYourself();
         Transform GetTransform();
+        void BreakStack(Vector3 targetPos);
     }
 }

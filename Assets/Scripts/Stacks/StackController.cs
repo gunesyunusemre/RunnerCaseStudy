@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using Dreamteck.Splines;
 using Helpers;
 using Managers;
 using Stacks.Instance;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Stacks
 {
@@ -13,9 +15,12 @@ namespace Stacks
         [SerializeField] private Transform parent;
         [SerializeField] private Transform followParent;
         [SerializeField] private List<Transform> parentList;
+        [SerializeField] private SplinePositioner dummy;
+        
 
 
-        private List<IStackInstance> _stackInstanceList = new List<IStackInstance>();
+        private readonly List<IStackInstance> _stackInstanceList = new List<IStackInstance>();
+        private SplineComputer _computer;
         public int InstanceID { get; private set; }
 
         private void OnEnable()
@@ -31,13 +36,20 @@ namespace Stacks
 
         private void Awake()
         {
+            GameObject pleb = new GameObject();
+            pleb.name = "Break Stack Dummy Positioner";
+            dummy = pleb.AddComponent<SplinePositioner>();
+            
             var checkEvents =
                 ManagerEventsHelper.TryGetManagerEvents(out LevelManagerEvents levelManagerEvents);
             if (checkEvents)
             {
                 levelManagerEvents.OnNextLevel += ClearCurrentStack;
+                levelManagerEvents.OnLevelStarted += OnLevelStarted;
             }
         }
+
+        
 
         public void AddStack(IStackInstance stackInstance)
         {
@@ -107,6 +119,32 @@ namespace Stacks
                 last.DestroyYourself();
             }
         }
+
+        public void BreakStack()
+        {
+            var currentPos = transform.position;
+            var currentSample = _computer.Project(currentPos);
+            var distance = _computer.CalculateLength(0f, currentSample.percent);
+            distance += 10f;
+            //var maxDistance = _computer.CalculateLength();
+            //var targetPercent = Formula.Map(distance, 0f, maxDistance, 0f, 1f);
+
+            //var targetPos = _computer.EvaluatePosition(targetPercent);
+            dummy.SetDistance(distance);
+
+            for (int i = 0; i < 5; i++)
+            {
+                var randomUnit = Random.insideUnitCircle * 2.5f;
+                var localPos = new Vector3(randomUnit.x, 1f, randomUnit.y);
+                var stackTargetPos = dummy.transform.TransformPoint(localPos);
+
+                var checkStack = TryRequestStack(out var stackInstance);
+                if (!checkStack)
+                    break;
+                
+                stackInstance.BreakStack(stackTargetPos);
+            }
+        }
         
         private void ClearCurrentStack()
         {
@@ -114,6 +152,12 @@ namespace Stacks
                 stackInstance.DestroyYourself();
             
             _stackInstanceList.Clear();
+        }
+        
+        private void OnLevelStarted(SplineComputer computer, float _)
+        {
+            _computer = computer;
+            dummy.spline = _computer;
         }
     }
 }
