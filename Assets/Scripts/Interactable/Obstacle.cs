@@ -28,23 +28,25 @@ namespace Interactable
 
         private void OnTriggerEnter(Collider other)
         {
-            CheckStackController(other);
-
-            CheckPlayer(other);
+            var canAddFriction = CheckStackController(other);
+            if (canAddFriction)
+                CheckPlayer(other);
         }
 
-        private void CheckStackController(Collider other)
+        private bool CheckStackController(Collider other)
         {
             var id = other.gameObject.GetInstanceID();
             if (!StackControllerInstanceHelper.TryGetInstance(id, out IStackControllerInstance stackControllerInstance))
-                return;
+                return false;
 
             var checkStack = stackControllerInstance.TryRequestStack(out var stackInstance);
             if (checkStack)
             {
                 stackInstance.DestroyYourself();
                 stackControllerInstance.BreakStack();
+                return true;
             }
+            return false;
         }
 
         private void CheckPlayer(Collider other)

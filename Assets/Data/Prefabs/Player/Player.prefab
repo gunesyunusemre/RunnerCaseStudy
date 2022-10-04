@@ -126,6 +126,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  dummy: {fileID: 0}
 --- !u!114 &1782428820628607897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,8 +181,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: -0.6, y: 0, z: 1.75}
+  m_Size: {x: 0.9999995, y: 1, z: 1.7346995}
+  m_Center: {x: -0.6000013, y: -2.5701602e-10, z: 1.382647}
 --- !u!1001 &5884871750190463851
 PrefabInstance:
   m_ObjectHideFlags: 0
