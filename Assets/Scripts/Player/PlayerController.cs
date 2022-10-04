@@ -21,6 +21,7 @@ namespace Player
             if (checkEvents)
             {
                 levelManagerEvents.OnLevelStarted += LevelManagerEventsOnLevelStarted;
+                levelManagerEvents.OnNextLevel += LevelManagerEventsOnNextLevel;
             }
         }
 
@@ -39,10 +40,15 @@ namespace Player
         {
             levelManagerEvents.FireOnLevelFinish();
         }
-        
+
         private void LevelManagerEventsOnLevelStarted(SplineComputer computer, float distance)
         {
             playerContainer.FireOnStart(computer, distance);
+        }
+
+        private void LevelManagerEventsOnNextLevel()
+        {
+            playerContainer.FireOnNextLevel();
         }
     }
 }

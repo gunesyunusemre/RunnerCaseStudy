@@ -193,7 +193,13 @@ namespace Player
             follower.enabled = true;
             target.localPosition = Vector3.zero;
         }
-        
+
+        protected override void OnNextLevel()
+        {
+            base.OnNextLevel();
+            target.localPosition = Vector3.zero;
+        }
+
         private void OnChangeFriction(float percent)
         {
             _friction = (float)Formula.Map(percent, 0f, 100f, 0f, forwardSpeed);

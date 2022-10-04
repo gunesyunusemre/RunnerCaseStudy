@@ -24,6 +24,9 @@ namespace Player
         public float ForwardSpeed => forwardSpeed;
         public float FrictionMoveToZeroSpeed => frictionMoveToZeroSpeed;
 
+        
+        public event UnityAction OnNextLevel;
+        public void FireOnNextLevel() => OnNextLevel?.Invoke();
 
         public event UnityAction OnLevelFinish;
         public void FireOnFinish() => OnLevelFinish?.Invoke();

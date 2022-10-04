@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Dreamteck.Splines;
+using UnityEngine;
 
 namespace Player
 {
@@ -10,6 +11,12 @@ namespace Player
         {
             base.OnLevelFinish();
             PlayAnimation("HandAnim");
+        }
+
+        protected override void OnNextLevel()
+        {
+            base.OnNextLevel();
+            PlayAnimation("Idle");
         }
 
         public void PlayAnimation(string animKey)

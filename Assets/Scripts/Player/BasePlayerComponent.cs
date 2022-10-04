@@ -16,6 +16,7 @@ namespace Player
             var checkPlayerContainer  = PlayerHelper.TryGetPlayerContainer(id, out PlayerContainer);
             if (checkPlayerContainer)
             {
+                PlayerContainer.OnNextLevel += OnNextLevel;
                 PlayerContainer.OnLevelFinish += OnLevelFinish;
                 PlayerContainer.OnLevelStart += OnLevelStart;
                 PlayerContainer.OnUpdate += OnUpdate;
@@ -34,6 +35,10 @@ namespace Player
         protected virtual void OnLevelFinish()
         {
             
+        }
+
+        protected virtual void OnNextLevel()
+        {
         }
     }
 }
