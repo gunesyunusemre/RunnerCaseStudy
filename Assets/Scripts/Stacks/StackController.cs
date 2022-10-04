@@ -18,10 +18,11 @@ namespace Stacks
         [SerializeField] private List<Transform> parentList;
         [SerializeField] private SplinePositioner dummy;
         
-
-
+        
         private readonly List<IStackInstance> _stackInstanceList = new List<IStackInstance>();
         private SplineComputer _computer;
+        private bool _isUntouchable = false;
+        
         public int InstanceID { get; private set; }
 
         private void OnEnable()
@@ -100,6 +101,10 @@ namespace Stacks
         public bool TryRequestStack(out IStackInstance stackInstance)
         {
             stackInstance = default;
+            if (_isUntouchable)
+                return false;
+
+            
             if (_stackInstanceList.Count <= 0)
                 return false;
 
@@ -111,6 +116,9 @@ namespace Stacks
 
         public void RemoveStack(int count)
         {
+            if (_isUntouchable)
+                return;
+
             for (int i = 0; i < count; i++)
             {
                 var index = _stackInstanceList.Count - 1;
@@ -123,6 +131,10 @@ namespace Stacks
 
         public void BreakStack()
         {
+            if (_isUntouchable)
+                return;
+
+            
             var currentPos = transform.position;
             var currentSample = _computer.Project(currentPos);
             var distance = _computer.CalculateLength(0f, currentSample.percent);
@@ -149,8 +161,13 @@ namespace Stacks
 
         public void Upgrade()
         {
+            if (_isUntouchable)
+                return;
+
             if (_stackInstanceList.Count <= 0)
                 return;
+
+            _isUntouchable = true;
             
             var first = _stackInstanceList[0];
             int lastType = first.container.StackType;
@@ -187,6 +204,7 @@ namespace Stacks
                 currentTransform.localPosition = Vector3.zero;
             }
 
+            int upgradedCount = 0;
             foreach (var kvp in upgradedDict)
             {
                 var current = kvp.Key;
@@ -201,8 +219,15 @@ namespace Stacks
                     targetTransform.localScale += Vector3.one *.01f;
                     target.container.MyLevel++;
                     _stackInstanceList.Remove(current);
+
+                    upgradedCount++;
+                    if (upgradedCount >= upgradeTargetList.Count)
+                        _isUntouchable = false;
                 });
             }
+
+            if (upgradedDict.Count <= 0)
+                _isUntouchable = false;
         }
 
         private void ClearCurrentStack()
