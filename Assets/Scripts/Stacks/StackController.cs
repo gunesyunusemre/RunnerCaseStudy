@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using Dreamteck.Splines;
 using Helpers;
@@ -145,7 +146,65 @@ namespace Stacks
                 stackInstance.BreakStack(stackTargetPos);
             }
         }
-        
+
+        public void Upgrade()
+        {
+            if (_stackInstanceList.Count <= 0)
+                return;
+            
+            var first = _stackInstanceList[0];
+            int lastType = first.container.StackType;
+            IStackInstance upgradeTarget = first;
+
+            List<IStackInstance> upgradeTargetList = new List<IStackInstance>();
+            upgradeTargetList.Add(upgradeTarget);
+            
+            Dictionary<IStackInstance, IStackInstance> upgradedDict = new Dictionary<IStackInstance, IStackInstance>();
+            for (int i = 1; i < _stackInstanceList.Count; i++)
+            {
+                var currentStack = _stackInstanceList[i];
+                var currentStackType = currentStack.container.StackType;
+                if (lastType == currentStackType)
+                {
+                    upgradedDict.Add(currentStack, upgradeTarget);
+                }
+                else
+                {
+                    lastType = currentStackType;
+                    upgradeTarget = currentStack;
+                }
+                if (!upgradeTargetList.Contains(upgradeTarget))
+                    upgradeTargetList.Add(upgradeTarget);
+            }
+
+            for (int i = 0; i < upgradeTargetList.Count; i++)
+            {
+                var current = upgradeTargetList[i];
+                var currentTransform = current.GetTransform();
+                var currentParent = parentList[i];
+                
+                currentTransform.SetParent(currentParent);
+                currentTransform.localPosition = Vector3.zero;
+            }
+
+            foreach (var kvp in upgradedDict)
+            {
+                var current = kvp.Key;
+                var target = kvp.Value;
+
+                var currentTransform = current.GetTransform();
+                var targetTransform = target.GetTransform();
+
+                currentTransform.GoToDynamicPosition(targetTransform.parent, Vector3.zero, .2f, 0f).OnKill(() =>
+                {
+                    current.DestroyYourself();
+                    targetTransform.localScale += Vector3.one *.01f;
+                    target.container.MyLevel++;
+                    _stackInstanceList.Remove(current);
+                });
+            }
+        }
+
         private void ClearCurrentStack()
         {
             foreach (var stackInstance in _stackInstanceList)

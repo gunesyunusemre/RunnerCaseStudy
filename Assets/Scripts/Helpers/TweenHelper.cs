@@ -23,7 +23,7 @@ namespace Helpers
                     _targetEuler.y = Mathf.Lerp(startRotation, endRotation, value);
                     targetTransform.localEulerAngles = _targetEuler;
                             
-                    targetTransform.localScale = Vector3.Lerp(targetTransform.localScale, Vector3.one, value);
+                    //targetTransform.localScale = Vector3.Lerp(targetTransform.localScale, Vector3.one, value);
                 }, 0f, 1f, duration)
                 .SetUpdate(UpdateType.Normal)
                 .SetEase(Ease.InOutQuad);

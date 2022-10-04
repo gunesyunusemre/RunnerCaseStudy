@@ -8,6 +8,9 @@ namespace Stacks
     [SelectionBase]
     public class Stack : MonoBehaviour, IStackInstance
     {
+        [SerializeField] private int targetType;
+        
+        
         public int InstanceID { get; private set; }
         public StackContainer container { get; set; }
 
@@ -20,6 +23,8 @@ namespace Stacks
             _firstParent = _transform.parent;
             InstanceID = gameObject.GetInstanceID();
             this.AddInstance();
+
+            container.StackType = targetType;
         }
 
         private void Start()

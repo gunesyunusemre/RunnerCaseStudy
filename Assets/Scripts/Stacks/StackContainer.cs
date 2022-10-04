@@ -12,22 +12,30 @@ namespace Stacks
         [SerializeField] private float maxDamping = .085f;
         [SerializeField] private int maxStackCount = 15;
         [SerializeField] private float height;
+        [SerializeField] private int stackType = 0;
+        
 
         public float RotDamping => rotDamping;
         public float MaxDamping => maxDamping;
         public float MinDamping => minDamping;
         public float MaxStackCount => maxStackCount;
 
+        public int StackType
+        {
+            get => stackType;
+            set => stackType = value;
+        }
+
+        public int MyLevel { get; set; } = 1;
 
         public float GetHeight()
         {
             return height;
         }
-        
-        
+
         public event UnityAction<IStackControllerInstance> OnBeforeCollect;
         public void FireOnBeforeCollect(IStackControllerInstance controllerInstance) => OnBeforeCollect?.Invoke(controllerInstance);
-        
+
         public event UnityAction<Transform, int, Transform> OnCollect;
         public void FireOnCollect(Transform followTarget, int index, Transform followParent) => OnCollect?.Invoke(followTarget, index, followParent);
     }
