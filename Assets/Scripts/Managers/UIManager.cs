@@ -18,6 +18,8 @@ namespace Managers
         [SerializeField] private CanvasGroup fader;
         [SerializeField] private TMP_Text scoreText;
         [SerializeField] private TMP_Text levelScoreText;
+        [SerializeField] private TMP_Text levelText;
+        
         
 
         private readonly UIManagerEvents managerEvents = new UIManagerEvents();
@@ -32,6 +34,8 @@ namespace Managers
 
             var loadScore = SaveDataHelper.GameSaveData.Score;
             ScoreManagerEventsOnChangeScore(loadScore);
+            var currentLevel = SaveDataHelper.GameSaveData.LevelIndex + 1;
+            WriteLevelNumber(currentLevel);
             
             ManagerID = GetInstanceID();
             RegisterInputManagerEvents();
@@ -148,6 +152,9 @@ namespace Managers
                     _isStarted = false;
                     fader.gameObject.SetActive(false);
                     tapToStart.SetActive(true);
+                    
+                    var currentLevel = SaveDataHelper.GameSaveData.LevelIndex + 1;
+                    WriteLevelNumber(currentLevel);
                 });
             });
         }
@@ -162,6 +169,10 @@ namespace Managers
             levelScoreText.text = levelScore.ToString(CultureInfo.InvariantCulture);
         }
 
+        private void WriteLevelNumber(int currentLevel)
+        {
+            levelText.text = "Level " + currentLevel;
+        }
 
     }
 }

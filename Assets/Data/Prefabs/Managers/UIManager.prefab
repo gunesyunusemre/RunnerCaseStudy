@@ -756,6 +756,7 @@ MonoBehaviour:
   fader: {fileID: 6967498568874461187}
   scoreText: {fileID: 1379333627460621049}
   levelScoreText: {fileID: 2748296307282893596}
+  levelText: {fileID: 4597783145303456037}
 --- !u!1 &4597783146697501239
 GameObject:
   m_ObjectHideFlags: 0
