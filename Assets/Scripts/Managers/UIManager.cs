@@ -3,6 +3,7 @@ using System.Globalization;
 using DG.Tweening;
 using Helpers;
 using Managers.Base;
+using SaveSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,6 +29,9 @@ namespace Managers
         public override void Init()
         {
             winClaimButton.onClick.AddListener(WinClaimClick);
+
+            var loadScore = SaveDataHelper.GameSaveData.Score;
+            ScoreManagerEventsOnChangeScore(loadScore);
             
             ManagerID = GetInstanceID();
             RegisterInputManagerEvents();

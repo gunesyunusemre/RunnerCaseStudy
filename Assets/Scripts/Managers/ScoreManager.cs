@@ -2,6 +2,7 @@
 using Dreamteck.Splines;
 using Helpers;
 using Managers.Base;
+using SaveSystem;
 using UnityEngine;
 
 namespace Managers
@@ -15,6 +16,8 @@ namespace Managers
         private UIManagerEvents uiManagerEvents;
         public override void Init()
         {
+            _currentScore = SaveDataHelper.GameSaveData.Score;
+            
             managerEvents.OnDecreaseScore+= OnDecreaseScore;
             managerEvents.OnIncreaseScore += OnIncreaseScore;
             RegisterUIManagerEvents();
@@ -54,6 +57,9 @@ namespace Managers
             _currentScore += _levelScore;
             managerEvents.FireOnChangeScore(_currentScore);
             _levelScore = 0;
+
+            SaveDataHelper.GameSaveData.Score = _currentScore;
+            SaveDataHelper.SaveAll();
         }
 
 
