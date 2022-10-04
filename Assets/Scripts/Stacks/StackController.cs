@@ -132,6 +132,7 @@ namespace Stacks
                 _stackInstanceList.Remove(last);
                 last.DestroyYourself();
             }
+            PlayFx.RemoveStack();
             CalculateScore();
         }
 
@@ -235,6 +236,7 @@ namespace Stacks
             if (upgradedDict.Count <= 0)
                 _isUntouchable = false;
             
+            PlayFx.UpgradeStacks();
             CalculateScore();
         }
 

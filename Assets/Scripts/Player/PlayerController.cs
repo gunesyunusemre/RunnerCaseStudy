@@ -1,5 +1,6 @@
 ﻿using Cinemachine;
 using Dreamteck.Splines;
+using Helpers;
 using Managers;
 using NaughtyAttributes;
 using UnityEngine;
@@ -41,12 +42,14 @@ namespace Player
 
         private void PlayerContainerOnLevelFinish()
         {
+            PlayFx.Finish();
             levelManagerEvents.FireOnLevelFinish();
         }
         
         [Button()]
         private void PlayerContainerOnTakeDamage()
         {
+            PlayFx.RemoveStack();
             impulseSource.GenerateImpulse(5);
         }
 
