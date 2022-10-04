@@ -1,6 +1,4 @@
-﻿using System;
-using Helpers;
-using Player;
+﻿using Player;
 using Stacks.Instance;
 using UnityEngine;
 
