@@ -13,6 +13,10 @@ namespace Stacks
 {
     public class StackController : MonoBehaviour, IStackControllerInstance
     {
+        [SerializeField] private GameObject stackFollowParent;
+        [SerializeField] private Transform ringFollower;
+        
+        
         [SerializeField] private Transform parent;
         [SerializeField] private Transform followParent;
         [SerializeField] private List<Transform> parentList;
@@ -249,6 +253,9 @@ namespace Stacks
             
             _stackInstanceList.Clear();
             _isUntouchable = false;
+            
+            ringFollower.SetParent(transform);
+            stackFollowParent.transform.SetParent(transform);
         }
         
         private void OnLevelStarted(SplineComputer computer, float _)
@@ -256,6 +263,9 @@ namespace Stacks
             _computer = computer;
             dummy.spline = _computer;
             _currentScore = 0;
+
+            stackFollowParent.transform.SetParent(null);
+            ringFollower.SetParent(null);
         }
 
         private void CalculateScore()
