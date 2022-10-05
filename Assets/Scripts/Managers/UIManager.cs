@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using DG.Tweening;
+using Dreamteck.Splines;
 using Helpers;
 using Managers.Base;
 using SaveSystem;
@@ -70,9 +71,12 @@ namespace Managers
             }
             
             levelManagerEvents.OnLevelFinish += OnLevelFinish;
+            levelManagerEvents.OnLevelStarted += LevelManagerOnLevelStarted;
         }
 
-       
+        
+
+
         private void RegisterInputManagerEvents()
         {
             var checkInputManagerEvents = ManagerEventsHelper.TryGetManagerEvents(out inputManagerEvents);
@@ -143,23 +147,34 @@ namespace Managers
             }).OnKill(() =>
             {
                 levelManagerEvents.FireOnNextLevel();
-                DOVirtual.Float(1f, 0f, .5f, value =>
-                {
-                    fader.alpha = value;
-                }).OnKill(() =>
-                {
-                    winClaimButton.interactable = true;
-
-                    _isStarted = false;
-                    fader.gameObject.SetActive(false);
-                    tapToStart.SetActive(true);
-                    
-                    var currentLevel = SaveDataHelper.GameSaveData.LevelIndex + 1;
-                    WriteLevelNumber(currentLevel);
-                });
+                //Invoke(nameof(FadeOff), 1f);
             });
         }
-        
+
+        private void FadeOff()
+        {
+            
+        }
+        private void LevelManagerOnLevelStarted(SplineComputer arg0, float arg1)
+        {
+            DOVirtual.Float(1f, 0f, .5f, value =>
+            {
+                fader.alpha = value;
+            }).OnKill(() =>
+            {
+                fader.gameObject.SetActive(false);
+
+                if (winClaimButton.interactable == false)
+                {
+                    winClaimButton.interactable = true;
+                    _isStarted = false;
+                    tapToStart.SetActive(true);
+                    var currentLevel = SaveDataHelper.GameSaveData.LevelIndex + 1;
+                    WriteLevelNumber(currentLevel);
+                }
+            });
+        }
+
         private void ScoreManagerEventsOnChangeScore(float score)
         {
             scoreText.text = score.ToString(CultureInfo.InvariantCulture);

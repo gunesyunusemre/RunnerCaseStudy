@@ -248,6 +248,7 @@ namespace Stacks
                 stackInstance.DestroyYourself();
             
             _stackInstanceList.Clear();
+            _isUntouchable = false;
         }
         
         private void OnLevelStarted(SplineComputer computer, float _)
