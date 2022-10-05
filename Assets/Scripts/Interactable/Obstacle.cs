@@ -9,6 +9,8 @@ namespace Interactable
     public class Obstacle : MonoBehaviour
     {
         [SerializeField] private float frictionPercent = 200;
+        [SerializeField] private float yOffset;
+        
         [SerializeField][Range(-3.5f, 3.5f)] private float xPosition;
         [SerializeField, ReadOnly] private SplinePositioner positioner;
 
@@ -23,6 +25,7 @@ namespace Interactable
 
             var offset = positioner.motion.offset;
             offset.x = xPosition;
+            offset.y = yOffset;
             positioner.motion.offset = offset;
         }
 

@@ -20,7 +20,8 @@ namespace Interactable
             _transform = transform;
             _defaultPos = _transform.localPosition.x;
             
-            Invoke(nameof(PlayMove), Random.Range(0f, 1.5f));
+            PlayMove();
+            //Invoke(nameof(PlayMove), Random.Range(0f, 1.5f));
         }
 
         private void PlayMove() => _canMove = true;
@@ -40,7 +41,7 @@ namespace Interactable
             pos.x = targetX;
             _transform.localPosition = Vector3.MoveTowards(currentPos, pos, Time.deltaTime * speed);
 
-            if (Math.Abs(_transform.position.x - targetX) < .05f)
+            if (Math.Abs(_transform.localPosition.x - targetX) < .05f)
                 _flipFlopState = !_flipFlopState;
             
         }
