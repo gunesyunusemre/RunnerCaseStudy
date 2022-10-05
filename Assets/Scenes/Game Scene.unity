@@ -332,6 +332,16 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.z
       value: -0.00000003480818
       objectReference: {fileID: 0}
+    - target: {fileID: 6702204907356653784, guid: e088daf4a8ad9c540ac8696d7a246b2a,
+        type: 3}
+      propertyPath: m_Center.y
+      value: -6.673381e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6702204907356653784, guid: e088daf4a8ad9c540ac8696d7a246b2a,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 1.3826468
+      objectReference: {fileID: 0}
     - target: {fileID: 7545079854538918738, guid: e088daf4a8ad9c540ac8696d7a246b2a,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
