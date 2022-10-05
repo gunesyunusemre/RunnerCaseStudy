@@ -197,7 +197,7 @@ namespace Player
         protected override void OnNextLevel()
         {
             base.OnNextLevel();
-            target.localPosition = Vector3.zero;
+            target.position = Vector3.zero;
         }
 
         private void OnChangeFriction(float percent)

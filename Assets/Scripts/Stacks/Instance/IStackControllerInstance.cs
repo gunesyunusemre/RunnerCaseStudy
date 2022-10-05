@@ -8,5 +8,6 @@ namespace Stacks.Instance
         bool TryRequestStack(out IStackInstance stackInstance);
         void BreakStack();
         void Upgrade();
+        bool CheckStack();
     }
 }

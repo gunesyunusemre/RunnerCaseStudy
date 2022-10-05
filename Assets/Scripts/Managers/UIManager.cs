@@ -127,7 +127,8 @@ namespace Managers
         {
             winClaimButton.interactable = false;
             managerEvents.FireOnClaimLevelScore();
-            Invoke(nameof(WinFader), 1f);
+            WinFader();
+            //Invoke(nameof(WinFader), 1f);
         }
 
         private void WinFader()

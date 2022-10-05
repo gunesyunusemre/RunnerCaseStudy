@@ -41,15 +41,18 @@ namespace Interactable
             var id = other.gameObject.GetInstanceID();
             if (!StackControllerInstanceHelper.TryGetInstance(id, out IStackControllerInstance stackControllerInstance))
                 return false;
-
-            var checkStack = stackControllerInstance.TryRequestStack(out var stackInstance);
+            
+            var checkStack = stackControllerInstance.CheckStack();
+            stackControllerInstance.BreakStack();
+            return checkStack;
+            /*var checkStack = stackControllerInstance.TryRequestStack(out var stackInstance);
             if (checkStack)
             {
                 stackInstance.DestroyYourself();
                 stackControllerInstance.BreakStack();
                 return true;
             }
-            return false;
+            return false;*/
         }
 
         private void CheckPlayer(Collider other)

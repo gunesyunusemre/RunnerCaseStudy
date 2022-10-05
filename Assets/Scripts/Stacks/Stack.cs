@@ -29,6 +29,11 @@ namespace Stacks
 
         private void Start()
         {
+            Invoke(nameof(DelayedStart), .1f);
+        }
+
+        private void DelayedStart()
+        {
             container.OnBeforeCollect += OnBeforeCollect;
             container.OnCollect += OnCollect;
         }

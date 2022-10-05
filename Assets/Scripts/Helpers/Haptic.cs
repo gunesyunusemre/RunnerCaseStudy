@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Helpers
 {
+    //https://www.youtube.com/watch?v=GfDiX2OSkQA
     public static class Haptic
     {
         private static float _hapticTime = 0;
@@ -57,7 +58,7 @@ namespace Helpers
             if (!check)
                 _hapticTime = Time.time;
             
-            return check;
+            return false;
         }
     }
 }

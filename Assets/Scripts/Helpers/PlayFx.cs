@@ -4,22 +4,22 @@
     {
         public static void AddStack()
         {
-            Haptic.Soft();
+            //Haptic.Heavy();
         }
 
         public static void RemoveStack()
         {
-            Haptic.Fail();
+            //Haptic.Fail();
         }
 
         public static void UpgradeStacks()
         {
-            Haptic.Success();
+            //Haptic.Success();
         }
 
         public static void Finish()
         {
-            Haptic.Success();
+            //Haptic.Success();
         }
     }
 }

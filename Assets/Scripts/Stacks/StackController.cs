@@ -136,6 +136,8 @@ namespace Stacks
             CalculateScore();
         }
 
+        public bool CheckStack() => _stackInstanceList.Count > 0;
+
         public void BreakStack()
         {
             if (_isUntouchable)
@@ -223,7 +225,7 @@ namespace Stacks
                 currentTransform.GoToDynamicPosition(targetTransform.parent, Vector3.zero, .2f, 0f).OnKill(() =>
                 {
                     current.DestroyYourself();
-                    targetTransform.localScale += Vector3.one *.01f;
+                    targetTransform.localScale += Vector3.one *.05f;
                     target.container.MyLevel++;
                     _stackInstanceList.Remove(current);
 
