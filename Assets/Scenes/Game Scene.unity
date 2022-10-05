@@ -197,6 +197,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 410425875042876999, guid: e088daf4a8ad9c540ac8696d7a246b2a,
+        type: 3}
+      propertyPath: stackFollow
+      value: 
+      objectReference: {fileID: 1813643987}
+    - target: {fileID: 410425875042876999, guid: e088daf4a8ad9c540ac8696d7a246b2a,
+        type: 3}
+      propertyPath: ringFollower
+      value: 
+      objectReference: {fileID: 1868579724}
+    - target: {fileID: 410425875042876999, guid: e088daf4a8ad9c540ac8696d7a246b2a,
+        type: 3}
+      propertyPath: stackFollowParent
+      value: 
+      objectReference: {fileID: 1813643987}
     - target: {fileID: 815510626901403273, guid: e088daf4a8ad9c540ac8696d7a246b2a,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -839,3 +854,15 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1813643987 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6026975813348606922, guid: e088daf4a8ad9c540ac8696d7a246b2a,
+    type: 3}
+  m_PrefabInstance: {fileID: 225838861}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1868579724 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2499337626705528005, guid: e088daf4a8ad9c540ac8696d7a246b2a,
+    type: 3}
+  m_PrefabInstance: {fileID: 225838861}
+  m_PrefabAsset: {fileID: 0}
